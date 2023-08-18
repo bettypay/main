@@ -1,0 +1,49 @@
+import requests
+from bs4 import BeautifulSoup
+from PIL import Image
+
+# Function to download images
+def download_image(url, filename):
+    response = requests.get(url)
+    with open(filename, 'wb') as f:
+        f.write(response.content)
+
+# URL of the page to scrape images from
+url = 'https://example.com'
+
+# Perform a GET request and get the HTML content of the page
+response = requests.get(url)
+html_content = response.content
+
+# Create a BeautifulSoup object to parse the HTML content
+soup = BeautifulSoup(html_content, 'html.parser')
+
+# Find image tags and extract the image URLs
+image_tags = soup.find_all('img')
+image_urls = [img['src'] for img in image_tags]
+
+# Iterate over the image URLs and download them
+for i, image_url in enumerate(image_urls):
+    try:
+        # Generate a filename for saving the image
+        filename = f'image_{i}.jpg'
+        # Download the image
+        download_image(image_url, filename)
+        print(f'Successfully downloaded image {filename}.')
+    except Exception as e:
+        print(f'Error downloading image {image_url}: {str(e)}')
+
+# Example of processing and resizing the downloaded images
+for i, image_url in enumerate(image_urls):
+    try:
+        filename = f'image_{i}.jpg'
+        # Open the image using the Pillow library
+        image = Image.open(filename)
+        # Resize the image
+        resized_image = image.resize((300, 300))
+        # Save the resized image
+        resized_filename = f'resized_image_{i}.jpg'
+        resized_image.save(resized_filename)
+        print(f'Successfully processed and saved image {resized_filename}.')
+    except Exception as e:
+        print(f'Error processing image {filename}: {str(e)}')
