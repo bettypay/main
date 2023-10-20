@@ -15,7 +15,7 @@ url = 'https://example.com'
 response = requests.get(url)
 html_content = response.content
 
-# Create a BeautifulSoup object to parse the HTML content
+# Create a BeautifulSoup object to parse the content
 soup = BeautifulSoup(html_content, 'html.parser')
 
 # Find image tags and extract the image URLs
