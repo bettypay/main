@@ -33,7 +33,7 @@ for i, image_url in enumerate(image_urls):
     except Exception as e:
         print(f'Error downloading image {image_url}: {str(e)}')
 
-# Example of processing and resizing the downloaded images
+# Example of processing and resizing the downloaded images.
 for i, image_url in enumerate(image_urls):
     try:
         filename = f'image_{i}.jpg'
